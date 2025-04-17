@@ -30,14 +30,7 @@ function Projects({ projects: propProjects, loading, error }) {
       const fetchProjects = async () => {
         try {
           setIsLoading(true);
-          const response = await fetch('https://portofolio-fullstack-server-scs6-8z6ws851f.vercel.app/api/projects', {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              // 'Authorization': 'Bearer your-token' // if needed
-            },
-            credentials: 'include', // if using cookies
-          });
+          const response = await fetch('https://portfolio-graphics-server.vercel.app/api/projects');
           
           if (!response.ok) {
             throw new Error('Failed to fetch projects');
