@@ -1,5 +1,5 @@
 // About.js
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Particle from "../Particle";
 import Github from "./Github";
@@ -11,29 +11,33 @@ import WorkExperience from "./WorkExperience";
 
 
 function About() {
-  // Define the skills and technologies you want to show on the About page
-  const skills = [
-    "Express.js",
-    "React",
-    "NestJS",
-    "Next.js",
-    "TypeScript",
-    "Node.js",
-    "MongoDB",
-    "MySQL",
-    "PostgreSQL",
-    "SQL Server",
-    "Neo4j",
-    "Python",
-    "Bootstrap",
-    "Tailwind",
-    "Redux"
-
-  ];
+  const [skills, setSkills] = useState([]);
+  const [loading, setLoading] = useState(true);
   
+  useEffect(() => {
+    // Fetch skills from the API
+    const apiBaseUrl = process.env.NODE_ENV === 'production' 
+      ? 'https://portfolio-graphics-server.vercel.app'
+      : 'http://localhost:3000';
+      
+    fetch(`${apiBaseUrl}/api/skills`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then(data => {
+        setSkills(data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error("Error fetching skills:", error);
+        setLoading(false);
+      });
+  }, []);
   
-  
-  const technologies = [ ];
+  const technologies = [];
 
   // Define the tools you want to show on the About page
   const tools = [
@@ -89,7 +93,11 @@ function About() {
         <h1 className="project-heading" style={{ color: "#c889e6", textAlign: "center", marginBottom: "20px" }}>
           Professional <strong className="purple">Skillset</strong>
         </h1>
-        <Techstack skills={skills} technologies={technologies} />
+        {loading ? (
+          <div className="text-center" style={{ color: "white" }}>Loading skills...</div>
+        ) : (
+          <Techstack skills={skills} technologies={technologies} />
+        )}
 
         <h1 className="project-heading" style={{ color: "#c889e6", textAlign: "center", marginBottom: "20px" }}>
           <strong className="purple">Tools</strong> I use
