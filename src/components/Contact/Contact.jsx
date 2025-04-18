@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Particle from "../Particle";
 import emailjs from "emailjs-com"; // Import EmailJS
@@ -14,6 +14,8 @@ const Contact = () => {
     email: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const formRef = useRef();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,14 +23,23 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+
+    // EmailJS expects specific parameter names that match your template
+    // Make sure these match exactly with your EmailJS template parameters
+    const templateParams = {
+      from_name: formData.name,
+      reply_to: formData.email,
+      message: formData.message,
+    };
 
     // Send email using EmailJS
     emailjs
       .send(
-        "service_9vcvc", // Replace with your EmailJS service ID
-        "template_bvbvb", // Replace with your EmailJS template ID
-        formData,
-        "bIs7yKutGip5UZ6g8" // Replace with your EmailJS user ID
+        "service_dvrx0c8", // Your EmailJS service ID
+        "template_p9q5698", // Your EmailJS template ID
+        templateParams,
+        "u0bHEiiAj0zXnoQDf" // Your EmailJS user ID
       )
       .then(
         (response) => {
@@ -36,6 +47,12 @@ const Contact = () => {
           toast.success("Message Sent Successfully!", {
             position: "top-right",
             autoClose: 3000,
+          });
+          // Reset form after submission
+          setFormData({
+            name: "",
+            email: "",
+            message: "",
           });
         },
         (error) => {
@@ -45,14 +62,10 @@ const Contact = () => {
             autoClose: 3000,
           });
         }
-      );
-
-    // Reset form after submission
-    setFormData({
-      name: "",
-      email: "",
-      message: "",
-    });
+      )
+      .finally(() => {
+        setIsSubmitting(false);
+      });
   };
 
   return (
@@ -63,7 +76,7 @@ const Contact = () => {
             <Col md={7} className="contact-header">
               <h1 className="heading">Get In Touch!</h1>
               <h1 className="heading-name">
-                Contact <strong className="main-name">TAREK SAAD FOUAD</strong>
+                Contact <strong className="main-name">Tarek Saad Fouad</strong>
               </h1>
               <div style={{ paddingTop: 30 }}>
                 <p>Feel free to drop a message. I will get back to you soon!</p>
@@ -77,7 +90,7 @@ const Contact = () => {
             </Col>
 
             <Col md={5} className="contact-form-section">
-              <form onSubmit={handleSubmit} className="contact-form">
+              <form ref={formRef} onSubmit={handleSubmit} className="contact-form">
                 <div className="form-group">
                   <label>Name</label>
                   <input
@@ -110,9 +123,13 @@ const Contact = () => {
                     className="input-field"
                   />
                 </div>
-                <button type="submit" className="submit-btn">
+                <button 
+                  type="submit" 
+                  className="submit-btn"
+                  disabled={isSubmitting}
+                >
                   <FiSend style={{ marginRight: "8px" }} />
-                  Send
+                  {isSubmitting ? "Sending..." : "Send"}
                 </button>
               </form>
             </Col>

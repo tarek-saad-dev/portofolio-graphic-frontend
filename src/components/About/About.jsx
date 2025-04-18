@@ -12,7 +12,11 @@ import WorkExperience from "./WorkExperience";
 
 function About() {
   const [skills, setSkills] = useState([]);
+  const [tools, setTools] = useState([]);
+  const [experiences, setExperiences] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [toolsLoading, setToolsLoading] = useState(true);
+  const [experiencesLoading, setExperiencesLoading] = useState(true);
   
   useEffect(() => {
     // Fetch skills from the API
@@ -35,32 +39,45 @@ function About() {
         console.error("Error fetching skills:", error);
         setLoading(false);
       });
+      
+    // Fetch tools from the API
+    fetch(`${apiBaseUrl}/api/tools`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then(data => {
+        setTools(data);
+        setToolsLoading(false);
+      })
+      .catch(error => {
+        console.error("Error fetching tools:", error);
+        setToolsLoading(false);
+      });
+      
+    // Fetch experiences from the API
+    fetch(`${apiBaseUrl}/api/experiences`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Sort experiences by order if available
+        const sortedData = data.sort((a, b) => (a.order || 0) - (b.order || 0));
+        setExperiences(sortedData);
+        setExperiencesLoading(false);
+      })
+      .catch(error => {
+        console.error("Error fetching experiences:", error);
+        setExperiencesLoading(false);
+      });
   }, []);
   
   const technologies = [];
-
-  // Define the tools you want to show on the About page
-  const tools = [
-    "VS Code",
-    "Postman",
-    "MongoDB Compass",
-    // "Docker",
-    "Swagger",
-    "GitHub",
-    "Git",
-    "neondb",
-    "Firebase",
-    "Vercel",
-    "Netlify",
-    "Render",
-    "Stripe",
-    "Figma",
-    "API",
-    "Axios",
-    "JWT",
-    "Open Ai"
-  ];
-  
 
   return (
     <Container fluid className="about-section" style={{ backgroundColor: "#0d1117" }}>
@@ -102,12 +119,20 @@ function About() {
         <h1 className="project-heading" style={{ color: "#c889e6", textAlign: "center", marginBottom: "20px" }}>
           <strong className="purple">Tools</strong> I use
         </h1>
-        <Toolstack tools={tools} />
+        {toolsLoading ? (
+          <div className="text-center" style={{ color: "white" }}>Loading tools...</div>
+        ) : (
+          <Toolstack tools={tools} />
+        )}
         
         <h1 className="project-heading" style={{ color: "#c889e6", textAlign: "center", marginBottom: "20px" }}>
           Work<strong className="purple">Experience</strong>
         </h1>
-        <WorkExperience />
+        {experiencesLoading ? (
+          <div className="text-center" style={{ color: "white" }}>Loading experiences...</div>
+        ) : (
+          <WorkExperience experiences={experiences} />
+        )}
         <Github />
       </Container>
     </Container>
