@@ -9,9 +9,10 @@ import {
   AiOutlineTwitter,
   AiFillInstagram,
   AiFillFacebook,
+  AiFillBehanceCircle,
+  AiFillBehanceSquare,
 } from "react-icons/ai";
 import { FaLinkedinIn, FaYoutube } from "react-icons/fa";
-import { SiCodeforces } from "react-icons/si";
 
 function Home2() {
   useEffect(() => {
@@ -34,39 +35,25 @@ function Home2() {
               LET ME <span className="purple"> INTRODUCE </span> MYSELF
             </h1>
             <p className="home-about-body">
-              A dedicated and enthusiastic student pursuing an undergraduate
-              degree in Computer Science with a focus on Artificial Intelligence
-              🤷‍♂️
+              A passionate and creative graphic designer with expertise in visual communication, focusing on branding and design strategies.
               <br />
               <br />
-              Equipped with comprehensive web development skills like
+              Skilled in using design tools like
               <i>
                 <b className="purple">
                   {" "}
-                  Javascript, React.js and Next.js and more..
+                  Adobe Photoshop, Illustrator, Figma, and more..
                 </b>
               </i>
               <br />
               <br />
-              Along with strong ability to learn new technologies.&nbsp;
+              I specialize in creating stunning graphics for websites, apps, logos, and digital marketing materials. My expertise includes
               <i>
-                <b className="purple">Programming and Web Technologies </b> and
-                also in areas related to <b className="purple">AI tools.</b>
-              </i>
+                <b className="purple"> Graphic Design, Branding, and Visual Identity </b>
+              </i> as well as proficiency in UI/UX design tools and principles.
               <br />
-              <br />I have more than two years of experience in the field of web
-              applications
-              <b className="purple"> Node.js Environment</b> and
-              <i>
-                <b className="purple">
-                  {" "}
-                  Modern Javascript Library and Frameworks
-                </b>
-              </i>
-              &nbsp; like
-              <i>
-                <b className="purple"> React.js and Next.js</b>
-              </i>
+              <br />
+              With over two years of experience in graphic design and a strong background in creating visually appealing and functional designs, I am committed to delivering creative solutions that meet clients' needs and expectations.
             </p>
           </Col>
           <Col
@@ -94,12 +81,12 @@ function Home2() {
             <ul className="home-about-social-links">
               <li className="social-icons">
                 <a
-                  href="https://github.com/Tarek-Saad"
+                  href="https://www.behance.net/tareksaad3"
                   target="_blank"
                   rel="noreferrer"
-                  className="icon-colour  home-social-icons"
+                  className="icon-colour home-social-icons"
                 >
-                  <AiFillGithub />
+                  <AiFillBehanceSquare />
                 </a>
               </li>
               <li className="social-icons">
@@ -107,7 +94,7 @@ function Home2() {
                   href="https://www.facebook.com/tarek.elgokar1/"
                   target="_blank"
                   rel="noreferrer"
-                  className="icon-colour  home-social-icons"
+                  className="icon-colour home-social-icons"
                 >
                   <AiFillFacebook />
                 </a>
@@ -117,7 +104,7 @@ function Home2() {
                   href="https://www.linkedin.com/in/tarek-saad-0964b2247/"
                   target="_blank"
                   rel="noreferrer"
-                  className="icon-colour  home-social-icons"
+                  className="icon-colour home-social-icons"
                 >
                   <FaLinkedinIn />
                 </a>

@@ -5,10 +5,8 @@ import Container from "react-bootstrap/Container";
 import logo from "../Assets/TS.png";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
-import { CgGitFork } from "react-icons/cg";
 import { ImBlog } from "react-icons/im";
 import {
-  AiFillStar,
   AiOutlineHome,
   AiOutlineFundProjectionScreen,
   AiOutlineUser,
@@ -16,7 +14,7 @@ import {
 } from "react-icons/ai";
 import { CgFileDocument } from "react-icons/cg";
 import { SiCodeforces } from "react-icons/si"; // Import Codeforces icon
-import { FaYoutube } from "react-icons/fa";
+import { FaYoutube, FaBehance } from "react-icons/fa";
 
 function NavBar() {
   const [expand, updateExpanded] = useState(false);
@@ -116,12 +114,13 @@ function NavBar() {
 
             <Nav.Item className="fork-btn">
               <Button
-                href="https://github.com/Tarek-Saad"
+                href="https://www.behance.net/tareksaad3"
                 target="_blank"
                 className="fork-btn-inner"
+                style={{ backgroundColor: "#053eff", borderColor: "#053eff" }}
               >
-                <CgGitFork style={{ fontSize: "1.2em" }} />{" "}
-                <AiFillStar style={{ fontSize: "1.1em" }} />
+                <FaBehance style={{ fontSize: "1.2em" }} />{" "}
+                <span style={{ fontSize: "1.1em" }}>Behance</span>
               </Button>
             </Nav.Item>
 

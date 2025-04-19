@@ -2,20 +2,19 @@ import React from "react";
 import Typewriter from "typewriter-effect";
 
 function Type() {
-    return ( <
-        Typewriter options = {
-            {
+    return (
+        <Typewriter 
+            options={{
                 strings: [
-                    "Software Engineer",
-                    "MERN Stack Devloper",
-                    "Freelancer",
-                    "Software Architect",
+                    "Graphic Designer",
+                    "Logo & Visual Identity Designer",
+                    "Educational Content Designer",
+                    "Web Designer",
                 ],
                 autoStart: true,
                 loop: true,
                 deleteSpeed: 50,
-            }
-        }
+            }} 
         />
     );
 }

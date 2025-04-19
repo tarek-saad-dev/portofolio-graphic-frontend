@@ -5,6 +5,7 @@ import {
   AiOutlineTwitter,
   AiFillInstagram,
   AiFillFacebook,
+  AiFillBehanceCircle,
 } from "react-icons/ai";
 import { FaLinkedinIn, FaYoutube } from "react-icons/fa";
 import { SiCodeforces } from "react-icons/si";
@@ -25,12 +26,12 @@ function Footer() {
           <ul className="footer-icons">
             <li className="social-icons">
               <a
-                href="https://github.com/Tarek-Saad"
+                href="https://www.behance.net/tareksaad3"
                 style={{ color: "white" }}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <AiFillGithub />
+                <AiFillBehanceCircle />
               </a>
             </li>
             <li className="social-icons">

@@ -9,44 +9,39 @@ function AboutCard() {
         <blockquote className="blockquote mb-0">
           <p style={{ textAlign: "start" }}>
             Hi Everyone, I am <span className="purple">Tarek Saad</span>
-            <span style={{ padding: "0 6px" }} s>
+            <span style={{ padding: "0 6px" }}>
               from
             </span>{" "}
-            <span className="purple"> Alexandria, Egypt.</span>
+            <span className="purple">Alexandria, Egypt.</span>
             <br /> <hr />
-            I am currently a Full Stack Developer || software developer.
-            <br />
-            I study in Computer Science and Artificial Intelligence
+            I am a Graphic Designer with extensive experience in various design tools. I've worked on logo and visual identity designs, social media graphics, and primarily focused on print and book designs.
             <br />
             <br />
-            Apart from coding, some other activities that I love to do!
+            Apart from design, here are some other activities that I enjoy!
           </p>
           <ul style={{ lineHeight: "3rem" }}>
             <li className="about-activity">
-              <ImPointRight /> Learning new tools and technologies
+              <ImPointRight /> Learning new design tools and technologies
             </li>
             <li className="about-activity">
-              <ImPointRight /> Passionate about Automation and AI
+              <ImPointRight /> Passionate about UI/UX and Creative Design
             </li>
             <li className="about-activity">
-              <ImPointRight /> Explaining concepts in a fun way
+              <ImPointRight /> Creating visually compelling content
             </li>
             <li className="about-activity">
-              <ImPointRight /> Leading teams and designing full systems
+              <ImPointRight /> Leading creative projects and teams
             </li>
             <li className="about-activity">
-              <ImPointRight /> Researching better ways to build LMS
+              <ImPointRight /> Researching design trends and techniques
             </li>
             <li className="about-activity">
-              <ImPointRight /> Creating quality content and design
-            </li>
-            <li className="about-activity">
-              <ImPointRight /> Playing games, football, and traveling
+              <ImPointRight /> Exploring new ways to innovate in design
             </li>
           </ul>
 
           <p style={{ color: "rgb(155 126 172)" }}>
-            "Creativity is the art of collecting knowledge from different fields and weaving it into a single, powerful idea."{" "}
+            "Creativity is the art of collecting knowledge from different fields and weaving it into a single, powerful idea."
           </p>
           <footer className="blockquote-footer">Tarek Saad</footer>
         </blockquote>
