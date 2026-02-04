@@ -15,6 +15,7 @@ import Footer from "./components/Footer";
 import Contact from "./components/Contact/Contact"; // Import Contact component
 import Resume from "./components/Resume/ResumeNew";
 import ProjectDetail from "./components/Projects/ProjectDetail";
+import GraphicDesign from "./components/GraphicDesign/GraphicDesign";
 import Preloader from "./components/Pre";
 import ScrollToTop from "./components/ScrollToTop";
 import "./style.css";
@@ -38,34 +39,56 @@ function App() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const apiBaseUrl = process.env.NODE_ENV === 'production' 
-          ? 'https://portfolio-graphics-server.vercel.app'
-          : 'http://localhost:3000';
-          
-        const response = await fetch(`${apiBaseUrl}/api/projects`);
-        
+        const apiBaseUrl =
+          process.env.REACT_APP_GRAPHICS_API_BASE_URL ||
+          "https://portfolio-graphics-server.vercel.app";
+
+        const url = `${apiBaseUrl}/api/projects`;
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+          },
+        });
+
         if (!response.ok) {
-          throw new Error('Failed to fetch projects');
+          const errorText = await response.text();
+          throw new Error(
+            `Failed to fetch projects: ${response.status} ${response.statusText} ${errorText}`,
+          );
         }
-        
+
+        const contentType = response.headers.get("content-type") || "";
+        if (!contentType.includes("application/json")) {
+          const text = await response.text();
+          throw new Error(
+            `Expected JSON but received ${contentType || "unknown"}: ${text.slice(
+              0,
+              200,
+            )}`,
+          );
+        }
+
         const data = await response.json();
-        
+
         // Process projects to add public URL to image paths
-        const processedProjects = data.map(project => {
+        const processedProjects = data.map((project) => {
           return {
             ...project,
             // Convert relative paths to absolute URLs
-            imgPath: project.imgPath ? process.env.PUBLIC_URL + project.imgPath : null,
-            imagePaths: project.imagePaths ? project.imagePaths.map(path => 
-              process.env.PUBLIC_URL + path
-            ) : []
+            imgPath: project.imgPath
+              ? process.env.PUBLIC_URL + project.imgPath
+              : null,
+            imagePaths: project.imagePaths
+              ? project.imagePaths.map((path) => process.env.PUBLIC_URL + path)
+              : [],
           };
         });
-        
+
         setProjects(processedProjects);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching projects:', error);
+        console.error("Error fetching projects:", error);
         setError(error.message);
         setLoading(false);
       }
@@ -82,15 +105,27 @@ function App() {
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/project" element={<Projects projects={projects} loading={loading} error={error} />} />
+          <Route
+            path="/project"
+            element={
+              <Projects projects={projects} loading={loading} error={error} />
+            }
+          />
           <Route
             path="/project/:projectId"
-            element={<ProjectDetail projects={projects} loading={loading} error={error} />}
+            element={
+              <ProjectDetail
+                projects={projects}
+                loading={loading}
+                error={error}
+              />
+            }
           />
           <Route path="/about" element={<About />} />
           <Route path="/resume" element={<Resume />} />
           <Route path="/certificates" element={<Certificates />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/graphic-design" element={<GraphicDesign />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
         <Footer />
