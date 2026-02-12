@@ -30,33 +30,38 @@ function Projects({ projects: propProjects, loading, error }) {
       const fetchProjects = async () => {
         try {
           setIsLoading(true);
-          const apiBaseUrl = process.env.NODE_ENV === 'production' 
-            ? 'https://portfolio-graphics-server.vercel.app'
-            : 'http://localhost:3000';
-            
+          const apiBaseUrl =
+            process.env.NODE_ENV === "production"
+              ? "https://portfolio-graphics-server.vercel.app"
+              : "http://localhost:3000";
+
           const response = await fetch(`${apiBaseUrl}/api/projects`);
-          
+
           if (!response.ok) {
-            throw new Error('Failed to fetch projects');
+            throw new Error("Failed to fetch projects");
           }
-          
+
           const data = await response.json();
-          
+
           // Process the image paths to use the public URL
-          const processedProjects = data.map(project => {
+          const processedProjects = data.map((project) => {
             return {
               ...project,
-              imgPath: project.imgPath ? process.env.PUBLIC_URL + project.imgPath : null,
-              imagePaths: project.imagePaths ? project.imagePaths.map(path => 
-                process.env.PUBLIC_URL + path
-              ) : []
+              imgPath: project.imgPath
+                ? process.env.PUBLIC_URL + project.imgPath
+                : null,
+              imagePaths: project.imagePaths
+                ? project.imagePaths.map(
+                    (path) => process.env.PUBLIC_URL + path,
+                  )
+                : [],
             };
           });
-          
+
           setProjects(processedProjects);
           setIsLoading(false);
         } catch (error) {
-          console.error('Error fetching projects:', error);
+          console.error("Error fetching projects:", error);
           setErrorMessage(error.message);
           setIsLoading(false);
         }
@@ -111,10 +116,10 @@ function Projects({ projects: propProjects, loading, error }) {
               className="project-card"
               data-aos="fade-up"
               data-aos-delay={`${index * 100}`}
-              key={project.id}
+              key={project._id || project.id || project.slug || index}
             >
               <ProjectCard
-                id={project.id}
+                id={project._id || project.id}
                 imgPath={project.imgPath}
                 title={project.title}
                 description={project.description}

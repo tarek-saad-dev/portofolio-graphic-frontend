@@ -41,9 +41,9 @@ function App() {
       try {
         const apiBaseUrl =
           process.env.REACT_APP_GRAPHICS_API_BASE_URL ||
-          "https://portfolio-graphics-server.vercel.app";
+          "https://portfolio-graphic-server.vercel.app";
 
-        const url = `${apiBaseUrl}/api/projects`;
+        const url = `${apiBaseUrl}/api/gd/projects`;
         const response = await fetch(url, {
           method: "GET",
           headers: {
@@ -69,10 +69,13 @@ function App() {
           );
         }
 
-        const data = await response.json();
+        const response_data = await response.json();
+
+        // Extract projects array from API response structure
+        const projects = response_data.data || [];
 
         // Process projects to add public URL to image paths
-        const processedProjects = data.map((project) => {
+        const processedProjects = projects.map((project) => {
           return {
             ...project,
             // Convert relative paths to absolute URLs
