@@ -1,0 +1,61 @@
+.vertical-flow {
+  width: 100%;
+  max-width: 1200px;
+  margin: 3rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.vertical-flow-item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.vertical-flow-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.vertical-flow-image:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(199, 112, 240, 0.2);
+}
+
+.vertical-flow-caption {
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  max-width: 700px;
+}
+
+@media (max-width: 768px) {
+  .vertical-flow {
+    gap: 2.5rem;
+    margin: 2rem auto;
+  }
+
+  .vertical-flow-caption {
+    font-size: 0.875rem;
+    margin-top: 1rem;
+  }
+}

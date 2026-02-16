@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
+import { useSearchParams } from "react-router-dom";
 import Masonry from "react-masonry-css";
 import BehanceProjectCard from "./BehanceProjectCard";
 import ProjectFilters from "./ProjectFilters";
-import FullscreenProjectViewer from "./FullscreenProjectViewer";
+import ProjectViewer from "./ProjectViewer";
 import Particle from "../Particle";
 import "aos/dist/aos.css";
 import AOS from "aos";
@@ -13,10 +14,11 @@ function Projects({ projects: propProjects, loading, error }) {
   const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedProjectSlug, setSelectedProjectSlug] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [sortBy, setSortBy] = useState("newest");
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     AOS.init({
@@ -33,6 +35,13 @@ function Projects({ projects: propProjects, loading, error }) {
       setErrorMessage(error || null);
     }
   }, [propProjects, loading, error]);
+
+  useEffect(() => {
+    const slugFromUrl = searchParams.get("slug");
+    if (slugFromUrl) {
+      setSelectedProjectSlug(slugFromUrl);
+    }
+  }, [searchParams]);
 
   const categories = [
     ...new Set(projects.map((p) => p.category).filter(Boolean)),
@@ -71,28 +80,45 @@ function Projects({ projects: propProjects, loading, error }) {
   };
 
   const handleProjectClick = (project) => {
-    setSelectedProject(project);
+    const slug = project.slug || project._id || project.id;
+    setSelectedProjectSlug(slug);
+    setSearchParams({ slug });
   };
 
   const handleCloseViewer = () => {
-    setSelectedProject(null);
+    setSelectedProjectSlug(null);
+    setSearchParams({});
   };
 
   const handleNextProject = () => {
+    if (!selectedProjectSlug) return;
     const currentIndex = filteredProjects.findIndex(
-      (p) => p._id === selectedProject._id || p.id === selectedProject.id,
+      (p) => (p.slug || p._id || p.id) === selectedProjectSlug,
     );
+    if (currentIndex === -1) return;
     const nextIndex = (currentIndex + 1) % filteredProjects.length;
-    setSelectedProject(filteredProjects[nextIndex]);
+    const nextSlug =
+      filteredProjects[nextIndex].slug ||
+      filteredProjects[nextIndex]._id ||
+      filteredProjects[nextIndex].id;
+    setSelectedProjectSlug(nextSlug);
+    setSearchParams({ slug: nextSlug });
   };
 
   const handlePrevProject = () => {
+    if (!selectedProjectSlug) return;
     const currentIndex = filteredProjects.findIndex(
-      (p) => p._id === selectedProject._id || p.id === selectedProject.id,
+      (p) => (p.slug || p._id || p.id) === selectedProjectSlug,
     );
+    if (currentIndex === -1) return;
     const prevIndex =
       (currentIndex - 1 + filteredProjects.length) % filteredProjects.length;
-    setSelectedProject(filteredProjects[prevIndex]);
+    const prevSlug =
+      filteredProjects[prevIndex].slug ||
+      filteredProjects[prevIndex]._id ||
+      filteredProjects[prevIndex].id;
+    setSelectedProjectSlug(prevSlug);
+    setSearchParams({ slug: prevSlug });
   };
 
   if (isLoading) {
@@ -165,9 +191,9 @@ function Projects({ projects: propProjects, loading, error }) {
         )}
       </Container>
 
-      {selectedProject && (
-        <FullscreenProjectViewer
-          project={selectedProject}
+      {selectedProjectSlug && (
+        <ProjectViewer
+          slug={selectedProjectSlug}
           onClose={handleCloseViewer}
           onNext={handleNextProject}
           onPrev={handlePrevProject}

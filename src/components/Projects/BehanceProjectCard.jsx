@@ -14,8 +14,8 @@ function BehanceProjectCard({ project, onClick }) {
     >
       <div className="behance-card-image-wrapper">
         <img
-          src={project.imgPath}
-          alt={project.title}
+          src={project.coverImage?.url}
+          alt={project.coverImage?.alt || project.title}
           className="behance-card-image"
           loading="lazy"
         />

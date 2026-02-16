@@ -72,23 +72,11 @@ function App() {
         const response_data = await response.json();
 
         // Extract projects array from API response structure
-        const projects = response_data.data || [];
+        const projectsData = Array.isArray(response_data.data)
+          ? response_data.data
+          : [];
 
-        // Process projects to add public URL to image paths
-        const processedProjects = projects.map((project) => {
-          return {
-            ...project,
-            // Convert relative paths to absolute URLs
-            imgPath: project.imgPath
-              ? process.env.PUBLIC_URL + project.imgPath
-              : null,
-            imagePaths: project.imagePaths
-              ? project.imagePaths.map((path) => process.env.PUBLIC_URL + path)
-              : [],
-          };
-        });
-
-        setProjects(processedProjects);
+        setProjects(projectsData);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching projects:", error);
